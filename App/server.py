@@ -9,7 +9,7 @@ from predictor import getPrediction
 # Initialize app using Flask
 app = Flask(__name__)
 
-jsonDataFile = open('../Dataset/ICC23Data.json')
+jsonDataFile = open('./Dataset/ICC23Data.json')
 jsonData = json.load(jsonDataFile)
 
 # IP Address and Port Number to run the app

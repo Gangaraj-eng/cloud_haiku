@@ -2,15 +2,15 @@
 from tensorflow import keras
 import pickle
 import sys
-sys.path.insert(1,'../Models')
+sys.path.insert(1,'./Models')
 from teamCompositionPredictor import getTeamCompsition
 import pandas as pd
 from Helpers import getTeamsMapping, getTeamStats, getVenuesMapping, getPlayerRole
 import numpy as np
 
 # loading pre-trained models
-nn_model = keras.models.load_model('../Models/MatchWinnerPredictor.keras')
-with open('../Models/RobustScaler.pkl','rb') as f:
+nn_model = keras.models.load_model('./Models/MatchWinnerPredictor.keras')
+with open('./Models/RobustScaler.pkl','rb') as f:
    scaler = pickle.load(f)
 
 teamsMapping = getTeamsMapping()

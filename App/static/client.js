@@ -80,3 +80,42 @@ async function sendRequest() {
   loadingView.style.display = 'none'
   resultView.style.display = 'block'
 }
+
+pulesRates=[]
+async function getDataFromAPI(url,pageNum,diagnosisName,doctorId) {
+  const response = await fetch(`${url}?page=${pageNum}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  return response.json().then(x=>{
+    for(var record in x.data)
+    {
+      var r = x.data[record]
+       var n1 = r.vitals.bloodPressureDiastole
+       console.log(r.diagnosis.name,r.doctor.id)
+       if(r.diagnosis.name == diagnosisName && r.doctor.id == doctorId)
+       {
+        pulesRates.push(r.vitals.pulse)
+       }
+    }
+  })
+}
+
+async function healthCheckup(diagnosisName, doctorId) {
+  const apiUrl = 'https://jsonmock.hackerrank.com/api/medical_records'
+  const list=[]
+  for(var i=1;i<=10;i++)
+  {
+      list.push(getDataFromAPI(apiUrl,i,diagnosisName,doctorId))
+  }
+  await Promise.all(list).then(x=>{
+    var sum=0
+    for(var a in pulesRates)
+    sum+=pulesRates[a]
+    return Math.floor(sum/pulesRates.length)
+  })
+}
+
+healthCheckup("Pleurisy",3)
